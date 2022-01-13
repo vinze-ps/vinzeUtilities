@@ -155,6 +155,11 @@ var Vinze = /** @class */ (function () {
                     return -1;
             }
         };
+        this.stringToHTML = function (value) {
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(value, "text/html");
+            return doc.body;
+        };
         this.timeouts = [];
         this.intervals = [];
     }
@@ -239,6 +244,20 @@ var Vinze = /** @class */ (function () {
                 }
                 else
                     return _this.select(nodeList[0].parentElement);
+            },
+            prepend: function (value) {
+                if (nodeList.length === 0)
+                    return _this.select(selector);
+                nodeList.forEach(function (element) {
+                    element.prepend(_this.stringToHTML(value).children[0]);
+                });
+            },
+            append: function (value) {
+                if (nodeList.length === 0)
+                    return _this.select(selector);
+                nodeList.forEach(function (element) {
+                    element.append(_this.stringToHTML(value).children[0]);
+                });
             },
             // parents: (_selector: string) => {
             //   if (nodeList.length === 0)
