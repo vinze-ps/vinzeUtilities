@@ -182,6 +182,76 @@ var Vinze = /** @class */ (function () {
             _this.timeout("clear", name);
         });
     };
+    Vinze.prototype.select = function (selector) {
+        var _this = this;
+        if (selector === null)
+            return undefined;
+        var nodeList;
+        if (typeof selector === "string")
+            nodeList = document.querySelectorAll(selector);
+        else
+            nodeList = [selector];
+        return {
+            elements: nodeList,
+            length: nodeList.length,
+            addClass: function (className) {
+                nodeList.forEach(function (element) {
+                    element.classList.add(className);
+                });
+                return _this.select(selector);
+            },
+            removeClass: function (className) {
+                nodeList.forEach(function (element) {
+                    element.classList.remove(className);
+                });
+                return _this.select(selector);
+            },
+            toggleClass: function (className) {
+                nodeList.forEach(function (element) {
+                    if (element.classList.contains(className))
+                        element.classList.remove(className);
+                    else
+                        element.classList.add(className);
+                });
+                return _this.select(selector);
+            },
+            hasClass: function (className) {
+                if (nodeList.length === 0)
+                    return false;
+                if (className === "")
+                    return nodeList[0].classList.value;
+                else
+                    return nodeList[0].classList.contains(className);
+            },
+            parent: function (layer) {
+                if (nodeList.length === 0)
+                    return _this.select(selector);
+                if (typeof layer === "number") {
+                    var currentElement = nodeList[0];
+                    for (var i = 0; i < layer; i++) {
+                        if (currentElement !== null) {
+                            currentElement = currentElement.parentElement;
+                        }
+                        else
+                            break;
+                    }
+                    return _this.select(currentElement);
+                }
+                else
+                    return _this.select(nodeList[0].parentElement);
+            },
+            // parents: (_selector: string) => {
+            //   if (nodeList.length === 0)
+            //     return this.select(selector);
+            //     let currentElement: HTMLElement | null = nodeList[0];
+            //     while (currentElement.parentElement !== null) {
+            //         currentElement = currentElement.parentElement;
+            //         // if (currentElement.classList.contains())
+            //     }
+            //     return this.select(currentElement);
+            // }
+        };
+    };
     return Vinze;
 }());
 exports.default = Vinze;
