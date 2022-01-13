@@ -1,0 +1,19 @@
+{
+  "name": "vinzeutilities",
+  "version": "1.0.0",
+  "description": "Collection of utilities used in other vinze projects.",
+  "main": "src/vinzeUtilities.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinze-ps/vinzeUtilities.git"
+  },
+  "author": "vinze-ps",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vinze-ps/vinzeUtilities/issues"
+  },
+  "homepage": "https://github.com/vinze-ps/vinzeUtilities#readme"
+}
