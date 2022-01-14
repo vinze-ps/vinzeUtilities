@@ -278,7 +278,8 @@ var Vinze = /** @class */ (function () {
                         var addEvent = true;
                         // Loop through all existing events.
                         for (var i = 0; i < _this.events.length; i++) {
-                            if (_this.events[i].type.search(type) !== -1 &&
+                            if (_this.events[i].element !== element &&
+                                _this.events[i].type.search(type) !== -1 &&
                                 _this.events[i].listener.toString() === listener.toString() &&
                                 _this.events[i].useCapture === useCapture) {
                                 addEvent = false;
