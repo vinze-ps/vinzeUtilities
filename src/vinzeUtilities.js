@@ -2,6 +2,7 @@
 /* vinzeUtilities */
 /* created by Patryk Surmacz */
 /* github.com/vinze-ps */
+Object.defineProperty(exports, "__esModule", { value: true });
 var Vinze = /** @class */ (function () {
     function Vinze() {
         var _this = this;
@@ -356,3 +357,4 @@ var Vinze = /** @class */ (function () {
     };
     return Vinze;
 }());
+exports.default = Vinze;
