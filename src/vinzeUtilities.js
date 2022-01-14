@@ -2,7 +2,6 @@
 /* vinzeUtilities */
 /* created by Patryk Surmacz */
 /* github.com/vinze-ps */
-Object.defineProperty(exports, "__esModule", { value: true });
 var Vinze = /** @class */ (function () {
     function Vinze() {
         var _this = this;
@@ -162,6 +161,7 @@ var Vinze = /** @class */ (function () {
         };
         this.timeouts = [];
         this.intervals = [];
+        this.events = [];
     }
     Vinze.prototype.objectAssign = function (target) {
         var _this = this;
@@ -259,6 +259,89 @@ var Vinze = /** @class */ (function () {
                     element.append(_this.stringToHTML(value).children[0]);
                 });
             },
+            on: function (types, listener, useCapture, id) {
+                if (useCapture === void 0) { useCapture = false; }
+                if (id === void 0) { id = null; }
+                if (nodeList.length === 0)
+                    return _this.select(selector);
+                // Check whether event with passed id already exists.
+                if (id !== null)
+                    for (var i = 0; i < _this.events.length; i++)
+                        if (_this.events[i].id === id)
+                            return false;
+                var typesArray = types.split(" ");
+                // Loop through all elements.
+                nodeList.forEach(function (element) {
+                    // Loop through all passed types.
+                    typesArray.forEach(function (type) {
+                        var addEvent = true;
+                        // Loop through all existing events.
+                        for (var i = 0; i < _this.events.length; i++) {
+                            if (_this.events[i].type.search(type) !== -1 &&
+                                _this.events[i].listener.toString() === listener.toString() &&
+                                _this.events[i].useCapture === useCapture) {
+                                addEvent = false;
+                                break;
+                            }
+                            else {
+                                // End of the loop.
+                                if (i - 1 === _this.events.length)
+                                    addEvent = true;
+                            }
+                        }
+                        // Add a new event.
+                        if (addEvent) {
+                            element.addEventListener(type, listener, useCapture);
+                            _this.events.push({
+                                element: element,
+                                type: type,
+                                listener: listener,
+                                useCapture: useCapture,
+                                id: id,
+                            });
+                        }
+                    });
+                });
+                return _this.select(selector);
+            },
+            off: function (types, listener, useCapture, id) {
+                if (listener === void 0) { listener = null; }
+                if (useCapture === void 0) { useCapture = null; }
+                if (id === void 0) { id = null; }
+                if (nodeList.length === 0)
+                    return _this.select(selector);
+                // If id was passed, remove event directly.
+                if (id !== null)
+                    for (var i = 0; i < _this.events.length; i++)
+                        if (_this.events[i].id === id) {
+                            _this.events[i].element.removeEventListener(_this.events[i].type, _this.events[i].listener, _this.events[i].useCapture);
+                            _this.events.splice(i, 1);
+                        }
+                if (types === null)
+                    return _this.select(selector);
+                var typesArray = types.split(" ");
+                // Filer exists events.
+                var _events = _this.events.filter(function (event) {
+                    // Types.
+                    if (typesArray.indexOf(event.type) === -1)
+                        return false;
+                    // Listener.
+                    if (listener !== null)
+                        if (listener.toString() !== event.listener.toString())
+                            return false;
+                    // Use capture.
+                    if (useCapture !== null)
+                        if (useCapture !== event.useCapture)
+                            return false;
+                    return true;
+                });
+                // Remove events.
+                _events.forEach(function (event, index) {
+                    event.element.removeEventListener(event.type, event.listener, event.useCapture);
+                    _this.events.splice(index, 1);
+                });
+                return _this.select(selector);
+            },
             // parents: (_selector: string) => {
             //   if (nodeList.length === 0)
             //     return this.select(selector);
@@ -273,4 +356,3 @@ var Vinze = /** @class */ (function () {
     };
     return Vinze;
 }());
-exports.default = Vinze;
