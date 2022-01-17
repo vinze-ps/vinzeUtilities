@@ -344,6 +344,62 @@ var Vinze = /** @class */ (function () {
                 });
                 return _this.select(selector);
             },
+            width: function () {
+                if (nodeList.length === 0)
+                    return _this.select(selector);
+                var element = nodeList[0];
+                if (element.innerWidth)
+                    return element.innerWidth;
+                var padding = (parseFloat(getComputedStyle(element)["paddingLeft"].replace("px", "")) ||
+                    0)
+                    + (parseFloat(getComputedStyle(element)["paddingRight"].replace("px", "")) ||
+                        0);
+                return element.offsetWidth - padding;
+            },
+            height: function () {
+                if (nodeList.length === 0)
+                    return _this.select(selector);
+                var element = nodeList[0];
+                if (element.innerHeight)
+                    return element.innerHeight;
+                var padding = (parseFloat(getComputedStyle(element)["paddingTop"].replace("px", "")) ||
+                    0)
+                    + (parseFloat(getComputedStyle(element)["paddingBottom"].replace("px", "")) ||
+                        0);
+                return element.offsetHeight - padding;
+            },
+            outerWidth: function (includeMargin) {
+                if (includeMargin === void 0) { includeMargin = false; }
+                if (nodeList.length === 0)
+                    return _this.select(selector);
+                var element = nodeList[0];
+                var margin = 0;
+                if (includeMargin)
+                    margin =
+                        (parseFloat(getComputedStyle(element)["marginLeft"].replace("px", "")) ||
+                            0)
+                            + (parseFloat(getComputedStyle(element)["marginRight"].replace("px", "")) ||
+                                0);
+                if (element.innerWidth)
+                    return element.innerWidth + margin;
+                return element.offsetWidth + margin;
+            },
+            outerHeight: function (includeMargin) {
+                if (includeMargin === void 0) { includeMargin = false; }
+                if (nodeList.length === 0)
+                    return _this.select(selector);
+                var element = nodeList[0];
+                var margin = 0;
+                if (includeMargin)
+                    margin =
+                        (parseFloat(getComputedStyle(element)["marginTop"].replace("px", "")) ||
+                            0)
+                            + (parseFloat(getComputedStyle(element)["marginBottom"].replace("px", "")) ||
+                                0);
+                if (element.innerHeight)
+                    return element.innerHeight + margin;
+                return element.offsetHeight + margin;
+            },
             // parents: (_selector: string) => {
             //   if (nodeList.length === 0)
             //     return this.select(selector);
