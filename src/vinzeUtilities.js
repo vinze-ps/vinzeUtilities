@@ -347,9 +347,8 @@ var Vinze = /** @class */ (function () {
             width: function () {
                 if (nodeList.length === 0)
                     return _this.select(selector);
-                var win = nodeList[0].ownerDocument.defaultView;
-                if (win.innerWidth)
-                    return win.innerWidth;
+                if (nodeList[0].ownerDocument)
+                    return nodeList[0].ownerDocument.defaultView.innerWidth;
                 var padding = (parseFloat(getComputedStyle(nodeList[0])["paddingLeft"].replace("px", "")) ||
                     0)
                     + (parseFloat(getComputedStyle(nodeList[0])["paddingRight"].replace("px", "")) ||
@@ -359,9 +358,8 @@ var Vinze = /** @class */ (function () {
             height: function () {
                 if (nodeList.length === 0)
                     return _this.select(selector);
-                var win = nodeList[0].ownerDocument.defaultView;
-                if (win.innerHeight)
-                    return win.innerHeight;
+                if (nodeList[0].ownerDocument)
+                    return nodeList[0].ownerDocument.defaultView.innerHeight;
                 var padding = (parseFloat(getComputedStyle(nodeList[0])["paddingTop"].replace("px", "")) ||
                     0)
                     + (parseFloat(getComputedStyle(nodeList[0])["paddingBottom"].replace("px", "")) ||
@@ -372,9 +370,8 @@ var Vinze = /** @class */ (function () {
                 if (includeMargin === void 0) { includeMargin = false; }
                 if (nodeList.length === 0)
                     return _this.select(selector);
-                var win = nodeList[0].ownerDocument.defaultView;
-                if (win.innerWidth)
-                    return win.innerWidth;
+                if (nodeList[0].ownerDocument)
+                    return nodeList[0].ownerDocument.defaultView.innerWidth;
                 var margin = 0;
                 if (includeMargin)
                     margin =
@@ -388,9 +385,8 @@ var Vinze = /** @class */ (function () {
                 if (includeMargin === void 0) { includeMargin = false; }
                 if (nodeList.length === 0)
                     return _this.select(selector);
-                var win = nodeList[0].ownerDocument.defaultView;
-                if (win.innerHeight)
-                    return win.innerHeight;
+                if (nodeList[0].ownerDocument)
+                    return nodeList[0].ownerDocument.defaultView.innerHeight;
                 var margin = 0;
                 if (includeMargin)
                     margin =
@@ -403,7 +399,7 @@ var Vinze = /** @class */ (function () {
             offset: function () {
                 if (nodeList.length === 0)
                     return { top: 0, left: 0 };
-                if (!nodeList[0].getClientRects().length)
+                if (!nodeList[0].getClientRects().length || !nodeList[0].ownerDocument)
                     return { top: 0, left: 0 };
                 var win = nodeList[0].ownerDocument.defaultView;
                 var rectObject = nodeList[0].getBoundingClientRect();
