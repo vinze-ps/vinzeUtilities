@@ -347,69 +347,103 @@ var Vinze = /** @class */ (function () {
             width: function () {
                 if (nodeList.length === 0)
                     return _this.select(selector);
-                var element = nodeList[0];
-                if (element.innerWidth)
-                    return element.innerWidth;
-                var padding = (parseFloat(getComputedStyle(element)["paddingLeft"].replace("px", "")) ||
+                var win = nodeList[0].ownerDocument.defaultView;
+                if (win.innerWidth)
+                    return win.innerWidth;
+                var padding = (parseFloat(getComputedStyle(nodeList[0])["paddingLeft"].replace("px", "")) ||
                     0)
-                    + (parseFloat(getComputedStyle(element)["paddingRight"].replace("px", "")) ||
+                    + (parseFloat(getComputedStyle(nodeList[0])["paddingRight"].replace("px", "")) ||
                         0);
-                return element.offsetWidth - padding;
+                return nodeList[0].offsetWidth - padding;
             },
             height: function () {
                 if (nodeList.length === 0)
                     return _this.select(selector);
-                var element = nodeList[0];
-                if (element.innerHeight)
-                    return element.innerHeight;
-                var padding = (parseFloat(getComputedStyle(element)["paddingTop"].replace("px", "")) ||
+                var win = nodeList[0].ownerDocument.defaultView;
+                if (win.innerHeight)
+                    return win.innerHeight;
+                var padding = (parseFloat(getComputedStyle(nodeList[0])["paddingTop"].replace("px", "")) ||
                     0)
-                    + (parseFloat(getComputedStyle(element)["paddingBottom"].replace("px", "")) ||
+                    + (parseFloat(getComputedStyle(nodeList[0])["paddingBottom"].replace("px", "")) ||
                         0);
-                return element.offsetHeight - padding;
+                return nodeList[0].offsetHeight - padding;
             },
             outerWidth: function (includeMargin) {
                 if (includeMargin === void 0) { includeMargin = false; }
                 if (nodeList.length === 0)
                     return _this.select(selector);
-                var element = nodeList[0];
+                var win = nodeList[0].ownerDocument.defaultView;
+                if (win.innerWidth)
+                    return win.innerWidth;
                 var margin = 0;
                 if (includeMargin)
                     margin =
-                        (parseFloat(getComputedStyle(element)["marginLeft"].replace("px", "")) ||
+                        (parseFloat(getComputedStyle(nodeList[0])["marginLeft"].replace("px", "")) ||
                             0)
-                            + (parseFloat(getComputedStyle(element)["marginRight"].replace("px", "")) ||
+                            + (parseFloat(getComputedStyle(nodeList[0])["marginRight"].replace("px", "")) ||
                                 0);
-                if (element.innerWidth)
-                    return element.innerWidth + margin;
-                return element.offsetWidth + margin;
+                return nodeList[0].offsetWidth + margin;
             },
             outerHeight: function (includeMargin) {
                 if (includeMargin === void 0) { includeMargin = false; }
                 if (nodeList.length === 0)
                     return _this.select(selector);
-                var element = nodeList[0];
+                var win = nodeList[0].ownerDocument.defaultView;
+                if (win.innerHeight)
+                    return win.innerHeight;
                 var margin = 0;
                 if (includeMargin)
                     margin =
-                        (parseFloat(getComputedStyle(element)["marginTop"].replace("px", "")) ||
+                        (parseFloat(getComputedStyle(nodeList[0])["marginTop"].replace("px", "")) ||
                             0)
-                            + (parseFloat(getComputedStyle(element)["marginBottom"].replace("px", "")) ||
+                            + (parseFloat(getComputedStyle(nodeList[0])["marginBottom"].replace("px", "")) ||
                                 0);
-                if (element.innerHeight)
-                    return element.innerHeight + margin;
-                return element.offsetHeight + margin;
+                return nodeList[0].offsetHeight + margin;
             },
-            // parents: (_selector: string) => {
-            //   if (nodeList.length === 0)
-            //     return this.select(selector);
-            //     let currentElement: HTMLElement | null = nodeList[0];
-            //     while (currentElement.parentElement !== null) {
-            //         currentElement = currentElement.parentElement;
-            //         // if (currentElement.classList.contains())
-            //     }
-            //     return this.select(currentElement);
-            // }
+            offset: function () {
+                if (nodeList.length === 0)
+                    return { top: 0, left: 0 };
+                if (!nodeList[0].getClientRects().length)
+                    return { top: 0, left: 0 };
+                var win = nodeList[0].ownerDocument.defaultView;
+                var rectObject = nodeList[0].getBoundingClientRect();
+                return {
+                    top: rectObject.top + win.pageYOffset,
+                    left: rectObject.left + win.pageXOffset,
+                };
+            },
+            position: function () {
+                if (nodeList.length === 0)
+                    return { top: 0, left: 0 };
+                var offset, offsetParent, doc, parentOffset = { top: 0, left: 0 };
+                var innerUtils = new Vinze();
+                var ml = parseFloat(getComputedStyle(nodeList[0])["marginLeft"].replace("px", "")) ||
+                    0;
+                var mt = parseFloat(getComputedStyle(nodeList[0])["marginTop"].replace("px", "")) ||
+                    0;
+                if (getComputedStyle(nodeList[0])["position"] === "fixed") {
+                    offset = nodeList[0].getBoundingClientRect();
+                }
+                else {
+                    offset = innerUtils.select(nodeList[0]).offset();
+                }
+                doc = nodeList[0].ownerDocument;
+                offsetParent = (nodeList[0].offsetParent || doc.documentElement);
+                while (offsetParent &&
+                    (offsetParent === doc.body || offsetParent === doc.documentElement) &&
+                    getComputedStyle(nodeList[0])["position"] === "static") {
+                    offsetParent = offsetParent.parentNode;
+                }
+                if (offsetParent && offsetParent !== nodeList[0] && offsetParent.nodeType === 1) {
+                    parentOffset = innerUtils.select(offsetParent).offset();
+                    parentOffset.top += parseFloat(getComputedStyle(offsetParent)["borderTopWidth"].replace("px", ""));
+                    parentOffset.left += parseFloat(getComputedStyle(offsetParent)["borderLeftWidth"].replace("px", ""));
+                }
+                return {
+                    left: offset.left - parentOffset.left - ml,
+                    top: offset.top - parentOffset.top - mt,
+                };
+            },
         };
     };
     return Vinze;
