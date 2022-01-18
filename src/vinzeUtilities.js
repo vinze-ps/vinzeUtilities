@@ -314,7 +314,7 @@ var Vinze = /** @class */ (function () {
                     return _this.select(selector);
                 // If id was passed, remove event directly.
                 if (id !== null)
-                    for (var i = 0; i < _this.events.length; i++)
+                    for (var i = _this.events.length - 1; i >= 0; i--)
                         if (_this.events[i].id === id) {
                             _this.events[i].element.removeEventListener(_this.events[i].type, _this.events[i].listener, _this.events[i].useCapture);
                             _this.events.splice(i, 1);
