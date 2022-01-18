@@ -347,8 +347,8 @@ var Vinze = /** @class */ (function () {
             width: function () {
                 if (nodeList.length === 0)
                     return _this.select(selector);
-                if (nodeList[0].ownerDocument)
-                    return nodeList[0].ownerDocument.defaultView.innerWidth;
+                if (!nodeList[0].ownerDocument)
+                    return nodeList[0].innerWidth;
                 var padding = (parseFloat(getComputedStyle(nodeList[0])["paddingLeft"].replace("px", "")) ||
                     0)
                     + (parseFloat(getComputedStyle(nodeList[0])["paddingRight"].replace("px", "")) ||
@@ -358,8 +358,8 @@ var Vinze = /** @class */ (function () {
             height: function () {
                 if (nodeList.length === 0)
                     return _this.select(selector);
-                if (nodeList[0].ownerDocument)
-                    return nodeList[0].ownerDocument.defaultView.innerHeight;
+                if (!nodeList[0].ownerDocument)
+                    return nodeList[0].innerHeight;
                 var padding = (parseFloat(getComputedStyle(nodeList[0])["paddingTop"].replace("px", "")) ||
                     0)
                     + (parseFloat(getComputedStyle(nodeList[0])["paddingBottom"].replace("px", "")) ||
@@ -370,8 +370,8 @@ var Vinze = /** @class */ (function () {
                 if (includeMargin === void 0) { includeMargin = false; }
                 if (nodeList.length === 0)
                     return _this.select(selector);
-                if (nodeList[0].ownerDocument)
-                    return nodeList[0].ownerDocument.defaultView.innerWidth;
+                if (!nodeList[0].ownerDocument)
+                    return nodeList[0].innerWidth;
                 var margin = 0;
                 if (includeMargin)
                     margin =
@@ -385,8 +385,8 @@ var Vinze = /** @class */ (function () {
                 if (includeMargin === void 0) { includeMargin = false; }
                 if (nodeList.length === 0)
                     return _this.select(selector);
-                if (nodeList[0].ownerDocument)
-                    return nodeList[0].ownerDocument.defaultView.innerHeight;
+                if (!nodeList[0].ownerDocument)
+                    return nodeList[0].innerHeight;
                 var margin = 0;
                 if (includeMargin)
                     margin =
