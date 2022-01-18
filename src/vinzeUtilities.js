@@ -43,17 +43,18 @@ var Vinze = /** @class */ (function () {
             if (fn === void 0) { fn = null; }
             switch (action) {
                 case "set":
-                    var indexOfTimeout = -1;
+                    var timeoutExists = false;
                     if (_this.timeouts.length > 0) {
                         for (var i = 0; i <= _this.timeouts.length - 1; i++) {
-                            indexOfTimeout = _this.timeouts[i].indexOf(name);
-                            if (indexOfTimeout !== -1) {
+                            timeoutExists = _this.timeouts[i][0] === name;
+                            if (timeoutExists) {
                                 _this.timeouts[i][1] = setTimeout(function () {
                                     if (fn)
                                         fn();
                                 }, duration);
+                                break;
                             }
-                            else if (indexOfTimeout === -1 && i === _this.timeouts.length - 1) {
+                            else if (!timeoutExists && i === _this.timeouts.length - 1) {
                                 _this.timeouts.push([
                                     name,
                                     setTimeout(function () {
@@ -61,6 +62,7 @@ var Vinze = /** @class */ (function () {
                                             fn();
                                     }, duration),
                                 ]);
+                                break;
                             }
                         }
                     }
@@ -73,7 +75,7 @@ var Vinze = /** @class */ (function () {
                             }, duration),
                         ]);
                     }
-                    return indexOfTimeout;
+                    return timeoutExists;
                 case "isset":
                     for (var i = 0; i <= _this.timeouts.length - 1; i++)
                         if (_this.timeouts[i][0] === name)
@@ -102,37 +104,39 @@ var Vinze = /** @class */ (function () {
             if (fn === void 0) { fn = null; }
             switch (action) {
                 case "set":
-                    var indexOfInterval = -1;
+                    var intervalExists = false;
                     if (_this.intervals.length > 0) {
                         for (var i = 0; i <= _this.intervals.length - 1; i++) {
-                            indexOfInterval = _this.intervals[i].indexOf(name);
-                            if (indexOfInterval !== -1) {
-                                _this.intervals[i][1] = setTimeout(function () {
+                            intervalExists = _this.intervals[i][0] === name;
+                            if (intervalExists) {
+                                _this.intervals[i][1] = setInterval(function () {
                                     if (fn)
                                         fn();
                                 }, tick);
+                                break;
                             }
-                            else if (indexOfInterval === -1 && i === _this.intervals.length - 1) {
+                            else if (!intervalExists && i === _this.intervals.length - 1) {
                                 _this.intervals.push([
                                     name,
-                                    setTimeout(function () {
+                                    setInterval(function () {
                                         if (fn)
                                             fn();
                                     }, tick),
                                 ]);
+                                break;
                             }
                         }
                     }
                     else {
                         _this.intervals.push([
                             name,
-                            setTimeout(function () {
+                            setInterval(function () {
                                 if (fn)
                                     fn();
                             }, tick),
                         ]);
                     }
-                    return indexOfInterval;
+                    return intervalExists;
                 case "isset":
                     for (var i = 0; i <= _this.intervals.length - 1; i++)
                         if (_this.intervals[i][0] === name)
