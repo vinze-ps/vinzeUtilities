@@ -183,7 +183,7 @@ var Vinze = /** @class */ (function () {
         });
         return target;
     };
-    Vinze.prototype.throttle = function (name, func, delay) {
+    Vinze.prototype.throttle = function (name, delay, func) {
         var _this = this;
         if (this.timeout("isset", name))
             return;
