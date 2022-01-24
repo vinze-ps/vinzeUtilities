@@ -238,10 +238,10 @@
                 var nodeList;
                 if (typeof selector === "string")
                     nodeList = document.querySelectorAll(selector);
-                else if (typeof selector === typeof HTMLElement)
-                    nodeList = [selector];
-                else
+                else if (selector === null || selector === undefined)
                     nodeList = [];
+                else
+                    nodeList = [selector];
                 return {
                     elements: nodeList,
                     length: nodeList.length,
@@ -488,7 +488,7 @@
                 };
             };
             return Vinze;
-        }());               
+        }());                     
   
       return Vinze;
     })();
