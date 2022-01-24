@@ -233,6 +233,24 @@
                     _this.timeout("clear", name);
                 });
             };
+            Vinze.prototype.cookies = function () {
+                return {
+                    set: function (name, value) {
+                        var expires = new Date();
+                        expires.setTime(expires.getTime() + 1 * 24 * 60 * 60 * 1000);
+                        document.cookie =
+                            name + "=" + value + ";expires=" + expires.toUTCString();
+                    },
+                    get: function (name) {
+                        var keyValue = document.cookie.match("(^|;) ?" + name + "=([^;]*)(;|$)");
+                        return keyValue ? keyValue[2] : null;
+                    },
+                    clear: function (name) {
+                        document.cookie =
+                            name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    },
+                };
+            };
             Vinze.prototype.select = function (selector) {
                 var _this = this;
                 var nodeList;
@@ -488,7 +506,7 @@
                 };
             };
             return Vinze;
-        }());                     
+        }());                   
   
       return Vinze;
     })();
