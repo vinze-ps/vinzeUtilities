@@ -235,13 +235,13 @@
             };
             Vinze.prototype.select = function (selector) {
                 var _this = this;
-                if (selector === null || undefined)
-                    return undefined;
                 var nodeList;
                 if (typeof selector === "string")
                     nodeList = document.querySelectorAll(selector);
-                else
+                else if (typeof selector === typeof HTMLElement)
                     nodeList = [selector];
+                else
+                    nodeList = [];
                 return {
                     elements: nodeList,
                     length: nodeList.length,
@@ -488,7 +488,7 @@
                 };
             };
             return Vinze;
-        }());
+        }());               
   
       return Vinze;
     })();
