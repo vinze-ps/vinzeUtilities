@@ -235,7 +235,7 @@
             };
             Vinze.prototype.select = function (selector) {
                 var _this = this;
-                if (selector === null)
+                if (selector === null || undefined)
                     return undefined;
                 var nodeList;
                 if (typeof selector === "string")
