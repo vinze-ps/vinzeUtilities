@@ -258,6 +258,8 @@
                     nodeList = document.querySelectorAll(selector);
                 else if (selector === null || selector === undefined)
                     nodeList = [];
+                else if (typeof selector === typeof NodeList || typeof selector === typeof Array)
+                    nodeList = selector;
                 else
                     nodeList = [selector];
                 return {
@@ -503,10 +505,19 @@
                             top: offset.top - parentOffset.top - mt,
                         };
                     },
+                    children: function () {
+                        if (nodeList.length === 0)
+                            return _this.select(selector);
+                        var children = nodeList[0].children;
+                        var childrenNodeList = [];
+                        for (var i = 0; i < children.length; i++)
+                            childrenNodeList.push(children[i]);
+                        return _this.select(childrenNodeList);
+                    },
                 };
             };
             return Vinze;
-        }());                   
+        }());                  
   
       return Vinze;
     })();
