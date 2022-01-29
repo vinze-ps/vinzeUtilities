@@ -514,10 +514,18 @@
                             childrenNodeList.push(children[i]);
                         return _this.select(childrenNodeList);
                     },
+                    remove: function () {
+                        if (nodeList.length === 0)
+                            return _this.select(selector);
+                        for (var i = nodeList.length - 1; i >= 0; i--) {
+                            nodeList[i].remove();
+                        }
+                        return _this.select(selector);
+                    },
                 };
             };
             return Vinze;
-        }());             
+        }());          
   
       return Vinze;
     })();
