@@ -311,6 +311,15 @@
                         else
                             return _this.select(nodeList[0].parentElement);
                     },
+                    children: function () {
+                        if (nodeList.length === 0)
+                            return _this.select(selector);
+                        var children = nodeList[0].children;
+                        var childrenNodeList = [];
+                        for (var i = 0; i < children.length; i++)
+                            childrenNodeList.push(children[i]);
+                        return _this.select(childrenNodeList);
+                    },
                     prepend: function (value) {
                         if (nodeList.length === 0)
                             return _this.select(selector);
@@ -409,6 +418,16 @@
                         }
                         return _this.select(selector);
                     },
+                    attr: function (name, val) {
+                        if (nodeList.length === 0 || name === undefined)
+                            return _this.select(selector);
+                        if (val === undefined)
+                            return nodeList[0].getAttribute(name);
+                        else {
+                            nodeList[0].setAttribute(name, val !== null && val !== void 0 ? val : "");
+                            return _this.select(selector);
+                        }
+                    },
                     width: function () {
                         if (nodeList.length === 0)
                             return _this.select(selector);
@@ -505,15 +524,6 @@
                             top: offset.top - parentOffset.top - mt,
                         };
                     },
-                    children: function () {
-                        if (nodeList.length === 0)
-                            return _this.select(selector);
-                        var children = nodeList[0].children;
-                        var childrenNodeList = [];
-                        for (var i = 0; i < children.length; i++)
-                            childrenNodeList.push(children[i]);
-                        return _this.select(childrenNodeList);
-                    },
                     remove: function () {
                         if (nodeList.length === 0)
                             return _this.select(selector);
@@ -525,7 +535,7 @@
                 };
             };
             return Vinze;
-        }());          
+        }());         
   
       return Vinze;
     })();
