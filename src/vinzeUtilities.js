@@ -294,6 +294,28 @@
                         else
                             return nodeList[0].classList.contains(className);
                     },
+                    css: function (value, value_2) {
+                        if (nodeList.length === 0)
+                            return _this.select(selector);
+                        if (typeof value === "object") {
+                            for (var i in value) {
+                                for (var j = 0; j <= nodeList.length - 1; j++) {
+                                    nodeList[j].style[i] = value[i];
+                                }
+                            }
+                            return _this.select(selector);
+                        }
+                        else if (typeof value === "string") {
+                            if (typeof value_2 === "string") {
+                                nodeList[0].style[value] = value_2;
+                                return _this.select(selector);
+                            }
+                            else
+                                return getComputedStyle(nodeList[0])[value].replace("px", "");
+                        }
+                        else
+                            return getComputedStyle(nodeList[0]);
+                    },
                     parent: function (layer) {
                         if (nodeList.length === 0)
                             return _this.select(selector);
@@ -535,7 +557,7 @@
                 };
             };
             return Vinze;
-        }());         
+        }());        
   
       return Vinze;
     })();
