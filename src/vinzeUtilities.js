@@ -258,7 +258,7 @@
                     nodeList = document.querySelectorAll(selector);
                 else if (selector === null || selector === undefined)
                     nodeList = [];
-                else if (Array.isArray(selector) || typeof selector === typeof NodeList)
+                else if (Array.isArray(selector) || NodeList.prototype.isPrototypeOf(selector))
                     nodeList = selector;
                 else
                     nodeList = [selector];
@@ -557,7 +557,7 @@
                 };
             };
             return Vinze;
-        }());
+        }());        
         
       return Vinze;
     })();
