@@ -295,6 +295,8 @@
                             return nodeList[0].classList.contains(className);
                     },
                     css: function (value, value_2) {
+                        if (value === void 0) { value = undefined; }
+                        if (value_2 === void 0) { value_2 = undefined; }
                         if (nodeList.length === 0)
                             return _this.select(selector);
                         if (typeof value === "object") {
@@ -317,6 +319,7 @@
                             return getComputedStyle(nodeList[0]);
                     },
                     parent: function (layer) {
+                        if (layer === void 0) { layer = undefined; }
                         if (nodeList.length === 0)
                             return _this.select(selector);
                         if (typeof layer === "number") {
@@ -332,6 +335,27 @@
                         }
                         else
                             return _this.select(nodeList[0].parentElement);
+                    },
+                    parents: function (_selector) {
+                        if (_selector === void 0) { _selector = undefined; }
+                        if (nodeList.length === 0)
+                            return _this.select(selector);
+                        var parentsNodeList = [];
+                        var _nodeList = [];
+                        if (_selector) {
+                            document.querySelectorAll(_selector).forEach(function (element) {
+                                _nodeList.push(element);
+                            });
+                        }
+                        nodeList.forEach(function (element) {
+                            var currentParent = element.parentElement;
+                            while (currentParent !== null) {
+                                if (parentsNodeList.indexOf(currentParent) === -1 && (_nodeList.length > 0 ? _nodeList.indexOf(currentParent) !== -1 : true))
+                                    parentsNodeList.push(currentParent);
+                                currentParent = currentParent.parentElement;
+                            }
+                        });
+                        return _this.select(parentsNodeList);
                     },
                     children: function () {
                         if (nodeList.length === 0)
@@ -441,6 +465,8 @@
                         return _this.select(selector);
                     },
                     attr: function (name, val) {
+                        if (name === void 0) { name = undefined; }
+                        if (val === void 0) { val = undefined; }
                         if (nodeList.length === 0 || name === undefined)
                             return _this.select(selector);
                         if (val === undefined)
@@ -557,7 +583,7 @@
                 };
             };
             return Vinze;
-        }());        
+        }());              
         
       return Vinze;
     })();
